@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<% if @menu_date %>
+  <h3>Menu for <%= menu_date(@menu_date) %></h3>
+<% end %>
+<table id="order_dt"  class="stripe" class="mytable" class="display" cellspacing="0" >
+  <thead>
+    <tr>
+      <th>Dish</th>
+      <th>Pick Up Time</th>
+      <th>Qty</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @meals.each do |meal| %>
+      <tr>
+        <td>&nbsp;&nbsp;<%= meal.title %></td>
+        <td>&nbsp;&nbsp;<%= meal.collect_window %></td>
+        <td>&nbsp;&nbsp;<%= meal.qty %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

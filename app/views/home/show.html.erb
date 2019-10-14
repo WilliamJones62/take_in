@@ -1,0 +1,21 @@
+<div class="jumbotron">
+  <h2>Welcome to Take In!
+  </h2>
+  <h3>Chef will be preparing dishes on Tuesdays and Thursdays.
+    Each dish will cost $6, which will be deducted directly from your next paycheck.
+    There will initailly be 2 dish choices. The number of choices will increase as
+    the service becomes more popular.
+    <br> To order;
+    <br>1) select the dish and pick up time from the kitchen
+    <br>2) enter the number of dishes required
+  </h3>
+</div>
+<% if current_user.email != 'admin' %>
+  <%= link_to 'Place an order', meals_list_path, class: "btn btn-primary" %>
+<% end %>
+
+<h2> Import Users</h2>
+<%= form_tag import_user_loads_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>

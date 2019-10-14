@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  menu_date: 2019-08-12
+  qty: 1
+  title: MyString
+  description: MyText
+
+two:
+  menu_date: 2019-08-12
+  qty: 1
+  title: MyString
+  description: MyText

@@ -1,0 +1,53 @@
+<%= form_with(model: meal, local: true) do |form| %>
+  <% if meal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(meal.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% meal.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title, "Dish" %>
+    <%= form.select :title, @titles, {}, {:value => params[:meals_title]} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :collect_window, "When" %>
+    <%= form.select :collect_window, @windows, {}, {:value => params[:meals_window]} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :qty %>
+    <%= form.number_field :qty, min: 1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :employee, "Employee" %>
+    <%= form.text_field :employee, readonly: true %>
+  </div>
+
+  <% if !@new %>
+    <div class="field">
+      <%= form.label :collected_flag, "Collected?" %>
+      <%= form.check_box :collected_flag %>
+    </div>
+    <p>
+      <strong>Image:</strong>
+      <% if @meal.normal_image.blank? %>
+        No image
+      <% else %>
+        <%= image_tag "http://employees.dartagnan.com/uploads/employee/image/"+@meal.normal_image, class: "img-circle" %>
+      <% end %>
+    </p>
+
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit "Place order" %>
+  </div>
+<% end %>

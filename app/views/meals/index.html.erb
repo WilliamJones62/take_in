@@ -1,0 +1,91 @@
+<p id="notice"><%= notice %></p>
+
+<% if @menu_date %>
+  <h3>Menu for <%= menu_date(@menu_date) %></h3>
+<% end %>
+
+<h3>Orders</h3>
+
+<table id="normal_dt"  class="stripe" class="mytable" class="display" cellspacing="0" >
+  <thead>
+    <tr>
+      <th>Collect window</th>
+      <th>Dish</th>
+      <th>Qty</th>
+      <th>Employee</th>
+      <th>Image</th>
+      <th>Collected?</th>
+      <th>Delivered?</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @meals.each do |meal| %>
+      <tr>
+        <% if (meal.collected_flag && meal.collected_flag == true) || (meal.delivered_flag && meal.delivered_flag == true) %>
+          <td><s>&nbsp;&nbsp;<%= meal.collect_window %></s></td>
+          <td><s>&nbsp;&nbsp;<%= meal.title %></s></td>
+          <td><s>&nbsp;&nbsp;&nbsp;&nbsp;<%= meal.qty %></s></td>
+          <td><s>&nbsp;&nbsp;&nbsp;&nbsp;<%= meal.employee %></s></td>
+        <% else %>
+          <td>&nbsp;&nbsp;<%= meal.collect_window %></td>
+          <td>&nbsp;&nbsp;<%= meal.title %></td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;<%= meal.qty %></td>
+          <td>&nbsp;&nbsp&nbsp;&nbsp;<%= meal.employee %></td>
+        <% end %>
+        <% if !meal.image.blank? %>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= image_tag "http://employees.dartagnan.com/uploads/employee/image/"+meal.image, class: "img-circle" %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+        <% if meal.collect_window == '12:00pm-1:00pm (Hot)' || meal.collect_window == '2:00pm-2:30pm (Hot)' %>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to human_boolean(meal.collected_flag), {controller: "meals", action: "collected", id: meal[:id]} %></td>
+          <td></td>
+        <% else %>
+          <td></td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to human_boolean(meal.delivered_flag), {controller: "meals", action: "delivered", id: meal[:id]} %></td>
+        <% end %>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to 'Show', meal %></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to 'Edit', edit_meal_path(meal) %></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to 'Delete', meal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>Totals</h3>
+
+<table id="normal_dt2" class="stripe" class="mytable" class="display" cellspacing="0" >
+  <thead>
+    <tr>
+      <th>Dish</th>
+      <th>Window</th>
+      <th>Ordered</th>
+      <th>Qty</th>
+      <th>Remaining</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @totals.each do |total| %>
+      <tr>
+        <% if total[:title] == 'Totals' %>
+          <td><b><font color="orange">&nbsp;&nbsp;<%= total[:title] %></font></b></td>
+          <td></td>
+          <td><b><font color="orange">&nbsp;&nbsp;<%= total[:ordered] %></font></b></td>
+          <td><b><font color="orange">&nbsp;&nbsp;<%= total[:qty] %></font></b></td>
+          <td><b><font color="orange">&nbsp;&nbsp;<%= total[:remaining] %></font></b></td>
+        <% else %>
+          <td>&nbsp;&nbsp;<%= total[:title] %></td>
+          <td>&nbsp;&nbsp;<%= total[:window] %></td>
+          <td>&nbsp;&nbsp;<%= total[:ordered] %></td>
+          <td></td>
+          <td></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

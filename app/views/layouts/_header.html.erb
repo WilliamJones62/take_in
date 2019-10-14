@@ -1,0 +1,24 @@
+<span id="navbar">
+  <% if user_signed_in? %>
+    <% if current_user.email == 'admin' %>
+      <span><%= link_to 'Orders', meals_path, class: "btn btn-primary" %></span>
+      <span><%= link_to 'Menu', menus_path, class: "btn btn-primary" %></span>
+    <% else %>
+      <span><%= link_to 'Place order', meals_list_path, class: "btn btn-primary" %></span>
+      <span><%= link_to 'Review order', meals_display_path, class: "btn btn-primary" %></span>
+    <% end %>
+    <span><%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-primary" %></span>
+  <% else %>
+    <span><%= link_to 'Sign in', new_user_session_path, class: "btn btn-primary" %></span>
+  <% end %>
+</span>
+<h1 class="title"><%= image_tag "/assets/Dart-Take-In mini.jpg" %>
+</h1>
+<% if user_signed_in? %>
+  <span>Signed in as <%= current_user.email %></span>
+<% else %>
+  <span>No user currently signed in</span>
+<% end %>
+<%= content_tag(:div, flash[:alert], :id => "flash_alert") if flash[:alert] %>
+<%= content_tag(:div, flash[:error], :id => "flash_error") if flash[:error] %>
+<br>

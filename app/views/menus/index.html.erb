@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Menus</h1>
+
+<table id="normal_dt"  class="stripe" class="mytable" class="display" cellspacing="0" >
+  <thead>
+    <tr>
+      <th>Menu date</th>
+      <th>Qty</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Show</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @menus.each do |menu| %>
+      <tr>
+        <td><%= display_date(menu.menu_date) %></td>
+        <td><strong><%= menu.qty %></strong></td>
+        <td><strong><%= menu.title %></strong></td>
+        <td><%= menu.description %></td>
+        <td><%= link_to 'Show', menu, class: "btn btn-primary" %></td>
+        <td><%= link_to 'Edit', edit_menu_path(menu), class: "btn btn-primary" %></td>
+        <td><%= link_to 'Delete', menu, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Create Take In', new_menu_path, class: "btn btn-primary" %>

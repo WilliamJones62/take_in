@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Dish:</strong>
+  <%= @meal.title %>
+</p>
+
+<p>
+  <strong>Collect window:</strong>
+  <%= @meal.collect_window %>
+</p>
+
+<p>
+  <strong>Qty:</strong>
+  <%= @meal.qty %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @meal.employee %>
+</p>
+
+<p>
+  <strong>Collected:</strong>
+  <%= human_boolean(@meal.collected) %>
+</p>
+
+<p>
+  <strong>Menu date:</strong>
+  <%= display_date(@meal.menu_date) %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <% if @meal.normal_image.blank? %>
+    No image
+  <% else %>
+    <%= image_tag "http://employees.dartagnan.com/uploads/employee/image/"+@meal.normal_image, class: "img-circle" %>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_meal_path(@meal), class: "btn btn-primary" %>
+<%= link_to 'Back', meals_path, class: "btn btn-primary" %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Menu date:</strong>
+  <%= display_date(@menu.menu_date) %>
+</p>
+
+<p>
+  <strong>Qty:</strong>
+  <%= @menu.qty %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @menu.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @menu.description %>
+</p>
+<br>
+<%= link_to 'Edit', edit_menu_path(@menu), class: "btn btn-primary" %>
+<%= link_to 'Back', menus_path, class: "btn btn-primary" %>

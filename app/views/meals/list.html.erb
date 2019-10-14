@@ -1,0 +1,78 @@
+<p id="notice"><%= notice %></p>
+
+<button onclick="fadeToggle()">Instructions</button>
+<fieldset id="instructions", hidden>
+  <h2>Welcome to Take In!
+  </h2>
+  <h3>Chef Christophe will be preparing dishes on Tuesdays and Thursdays.
+    Each dish will cost $6, which will be deducted directly from your next paycheck.
+    There will initially be 2 choices. The number of choices will increase as
+    the service becomes more popular. To order select the dish, pick up time and quantity,
+    then click 'Place order'. Meals collected from the kitchen will be served hot. Meals
+    delivered to the warehouse cafeteria refrigerator or office cafeteria refrigerator
+    can be collected any time after 3pm.
+  </h3>
+</fieldset>
+<% if current_user.email != 'admin' %>
+  <% if @menu_date %>
+    <h3>Menu for <%= menu_date(@menu_date) %></h3>
+  <% end %>
+  <%= form_with url: meals_selected_path, local: true, method: 'get' do |f| %>
+    <table id="order_dt"  class="stripe" class="mytable" class="display compact" cellspacing="0" >
+      <thead>
+        <tr>
+          <th>Dish</th>
+          <th>Description</th>
+          <th>Qty Left</th>
+          <th>Picture</th>
+          <th>Pick Up Time</th>
+          <th>Order Qty</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% x = 0 %>
+        <% @meals.each do |meal| %>
+          <% x += 1 %>
+          <% collect_window_id = "collect_window"+x.to_s %>
+          <% qty_id = "qty"+x.to_s %>
+          <% id_id = "id"+x.to_s %>
+          <tr>
+            <% if meal[:qty_left] > 0 %>
+              <td>&nbsp;&nbsp;<%= meal[:title] %></td>
+              <td>&nbsp;&nbsp;<%= meal[:description] %></td>
+              <td>&nbsp;&nbsp;<%= meal[:qty_left] %></td>
+              <% if meal[:image].blank? %>
+                <td></td>
+              <% else %>
+                <td>&nbsp;&nbsp;<%= link_to image_tag("http://cookbook.dartagnan.com/uploads/recipe_image/image/"+meal[:image]), {controller: "meals", action: "showimage", title: meal[:title]} %></td>
+              <% end %>
+              <td>&nbsp;&nbsp;<%= f.select collect_window_id, @windows, {} %></td>
+              <td>&nbsp;&nbsp;<%= f.number_field qty_id, {id: qty_id, max: 99, min: 1, step: 1} %></td>
+              <td hidden><%= f.number_field id_id, {id: id_id, value: meal[:id]} %></td>
+            <% else %>
+              <td><s>&nbsp;&nbsp;<%= meal[:title] %></s></td>
+              <td><s>&nbsp;&nbsp;<%= meal[:description] %></s></td>
+              <td><s>&nbsp;&nbsp;<%= meal[:qty_left] %></s></td>
+              <% if meal[:image].blank? %>
+                <td></td>
+              <% else %>
+                <td>&nbsp;&nbsp;<%= link_to image_tag("http://cookbook.dartagnan.com/uploads/recipe_image/image/"+meal[:image]), {controller: "meals", action: "showimage", title: meal[:title]} %></td>
+              <% end %>
+              <td></td>
+              <td></td>
+              <td></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= f.submit "Place order" %>
+  <% end %>
+<% end %>
+<script>
+function fadeToggle() {
+  $("#instructions").toggle(1000);
+}
+</script>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  collect_window: MyString
+  qty: 1
+  employee: MyString
+  collected: 2019-08-08 07:27:00
+  menu_date: 2019-08-08
+
+two:
+  title: MyString
+  collect_window: MyString
+  qty: 1
+  employee: MyString
+  collected: 2019-08-08 07:27:00
+  menu_date: 2019-08-08

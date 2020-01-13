@@ -27,7 +27,7 @@ class MenusController < ApplicationController
     if !recipe.blank?
       @menu.description = recipe.description
       photo = RecipeImage.find_by(recipe_id: recipe.id)
-      if !photo.blank?
+      if !photo.blank? && !photo.image.blank?
         @menu.image = photo.id.to_s+"/thumb_"+photo.image
         @menu.normal_image = photo.id.to_s+"/normal_"+photo.image
       end
@@ -48,7 +48,7 @@ class MenusController < ApplicationController
     if !recipe.blank?
       @menu.description = recipe.description
       photo = RecipeImage.find_by(recipe_id: recipe.id)
-      if !photo.blank?
+      if !photo.blank? && !photo.image.blank?
         @menu.image = "http://cookbook.dartagnan.com/uploads/recipe_image/image/"+photo.id.to_s+"/thumb_"+photo.image
         @menu.normal_image = "http://cookbook.dartagnan.com/uploads/recipe_image/image/"+photo.id.to_s+"/normal_"+photo.image
       end
@@ -84,6 +84,7 @@ class MenusController < ApplicationController
       recipes.each do |r|
         @titles.push(r.title)
       end
+      @titles.sort!
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

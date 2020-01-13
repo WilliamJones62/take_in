@@ -29,6 +29,17 @@ class MealsController < ApplicationController
 
   def list
     @windows = ['12:00pm-1:00pm (Hot)', '2:00pm-2:30pm (Hot)', 'Warehouse refrigerator', 'Office refrigerator']
+    if @menu_date
+      if Date.today == @menu_date.to_date
+        if Time.now > Time.now.beginning_of_day + 11.hours
+          @windows = ['2:00pm-2:30pm (Hot)', 'Warehouse refrigerator', 'Office refrigerator']
+        elsif Time.now > Time.now.beginning_of_day + 13.hours
+          @windows = ['Warehouse refrigerator', 'Office refrigerator']
+        elsif Time.now > Time.now.beginning_of_day + 14.hours
+          @windows = []
+        end
+      end
+    end
   end
 
   def showimage
@@ -285,7 +296,12 @@ class MealsController < ApplicationController
     def set_image
       # find the menu item and pass the normal_image
       menu = Menu.find_by title: params[:title]
-      @menu_image = "http://cookbook.dartagnan.com/uploads/recipe_image/image/"+menu.normal_image
+      if !menu.blank? && !menu.normal_image.blank?
+        @menu_image = "http://cookbook.dartagnan.com/uploads/recipe_image/image/"+menu.normal_image
+      else
+        @menu_image = 'DArtagnan_Logo_2015_CMYK_mini.jpg'
+
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

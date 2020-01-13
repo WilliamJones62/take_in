@@ -7,6 +7,10 @@
     $('#normal_dt').DataTable({
       scrollY: "30vh",
       scrollCollapse: true,
+      columnDefs: [ {
+          targets: [ 0 ],
+          orderData: [ 0, 1 ]
+      } ],
       paging: false,
       autoWidth: true,
       responsive: true,
